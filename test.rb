@@ -1,3 +1,25 @@
+first_list =     [
+      {"AVOCADO" => {:price => 3.00, :clearance => false}},
+      {"KALE" => {:price => 3.00, :clearance => false}},
+      {"KALE" => {:price => 3.00, :clearance => false}},
+      {"BLACK_BEANS" => {:price => 2.00, :clearance => false}},
+      {"ALMONDS" => {:price => 10.00, :clearance => false}},
+      {"TEMPEH" => {:price => 3.00, :clearance => false}},
+      {"CHEESE" => {:price => 6.00, :clearance => false}},
+      {"BEER" => {:price => 13.00, :clearance => false}},
+      {"BEER" => {:price => 13.00, :clearance => false}},
+      {"PEANUTBUTTER" => {:price => 3.00, :clearance => false}},
+      {"BEETS" => {:price => 2.00, :clearance => false}},
+      {"KALE" => {:price => 3.00, :clearance => false}},
+      {"SOY MILK" => {:price => 4.00, :clearance => false}}
+    ]
+
+coupon = [
+      {:item => "AVOCADO", :num => 2, :cost => 5.00},
+      {:item => "BEER", :num => 2, :cost => 20.00},
+      {:item => "CHEESE", :num => 3, :cost => 15.00}
+    ]
+
 def consolidate_cart(cart)
   temp_cart = cart.uniq 
   new_hash={}
@@ -39,12 +61,16 @@ def apply_coupons(cart, coupons)
         else
           coupon_list["#{key} W/COUPON"]= {:price => coupons[counter][:cost]/coupons[counter][:num], :clearance => new_hash[key][:clearance], :count => coupons[counter][:num]}
         end 
+      
       end
       counter +=1 
     end 
   }
   new_hash.merge(coupon_list)
 end
+
+#puts consolidate_cart(first_list)
+
 
 def apply_clearance(cart)
   cart.each{|key, value|
@@ -63,13 +89,10 @@ def checkout(cart, coupons)
   new_cart3.each{|key,value|
     sum += (new_cart3[key][:price]*new_cart3[key][:count])
   }
-  if sum > 100
-    sum *= 0.9
-  end
   return sum
 end
 
-
+puts checkout(first_list, coupon)
 
 
 
